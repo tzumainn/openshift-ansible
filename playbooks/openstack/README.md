@@ -163,6 +163,18 @@ $ vi inventory/group_vars/all.yml
 #openshift_hosted_manage_router: false
 ```
 
+   And if you also want to enable the ports pooling options, as well as
+   preloading them, you should uncomment and set the next:
+
+```bash
+#kuryr_openstack_enable_pools: True
+#kuryr_openstack_pool_max: 0
+#kuryr_openstack_pool_min: 1
+#kuryr_openstack_pool_batch: 5
+#kuryr_openstack_pool_update_frequency: 60
+#openshift_kuryr_precreate_subports: 5 # set the desired number
+```
+
 
 #### OpenShift configuration
 

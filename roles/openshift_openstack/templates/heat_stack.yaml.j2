@@ -721,6 +721,8 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
@@ -790,6 +792,8 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
@@ -840,6 +844,8 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
@@ -921,6 +927,10 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+{% if openshift_use_kuryr|default(false)|bool %}
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
+{% endif %}
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
@@ -935,6 +945,10 @@ resources:
           secgrp:
             - { get_resource: {% if openshift_openstack_flat_secgrp|default(False)|bool %}flat-secgrp{% else %}node-secgrp{% endif %} }
             - { get_resource: common-secgrp }
+{% if openshift_use_kuryr|default(false)|bool %}
+          pod_secgrp:
+            - { get_resource: pod_access_sg }
+{% endif %}
           floating_network:
             if:
               - no_floating
@@ -947,6 +961,7 @@ resources:
 {% if not openshift_openstack_provider_network_name %}
     depends_on:
       - interface
+      - pod_access_sg
 {% endif %}
 
   infra_nodes:
@@ -985,6 +1000,8 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
@@ -1002,6 +1019,10 @@ resources:
             - { get_resource: flat-secgrp }
 {% else %}
             - { get_resource: node-secgrp }
+{% endif %}
+{% if openshift_use_kuryr|default(false)|bool %}
+          pod_secgrp:
+            - { get_resource: pod_access_sg }
 {% endif %}
 {% if openshift_openstack_ui_ssh_tunnel|bool and openshift_openstack_num_masters|int < 2 %}
             - { get_resource: lb-secgrp }
@@ -1053,6 +1074,8 @@ resources:
 {% else %}
           net:         { get_resource: net }
           subnet:      { get_resource: subnet }
+          pod_net:     { get_resource: pod_net }
+          pod_subnet:  { get_resource: pod_subnet }
           net_name:
             str_replace:
               template: openshift-ansible-cluster_id-net
