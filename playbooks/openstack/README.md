@@ -102,6 +102,13 @@ $ ansible --version
 $ openstack image list
 ```
 
+If the ansible version happens to be < 2.4, you can get around that issue by
+doing:
+
+```bash
+$ pip install -U ansible
+```
+
 
 ### 2. Configuring the OpenStack Environment and OpenShift Cluster
 
@@ -143,7 +150,18 @@ $ vi inventory/group_vars/all.yml
 4. Set the `openshift_openstack_default_flavor` to the flavor you want your
    OpenShift VMs to use.
    - See `openstack flavor list` for the list of available flavors.
+5. If you opt to use Kuryr for the networking, make sure that you review all
+   the kuryr options in the file. At the very least, if you use Kuryr, you
+   should uncomment:
 
+```bash
+#openshift_use_kuryr: True
+#openshift_use_openshift_sdn: False
+#os_sdn_network_plugin_name: cni
+#openshift_node_proxy_mode: userspace
+#openshift_hosted_manage_registry: false
+#openshift_hosted_manage_router: false
+```
 
 
 #### OpenShift configuration

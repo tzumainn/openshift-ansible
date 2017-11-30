@@ -98,7 +98,44 @@ def build_inventory():
             hostvars['openshift_node_labels'] = node_labels
 
         inventory['_meta']['hostvars'][server.name] = hostvars
+
+    kuryr_vars = _get_kuryr_vars(cloud)
+    if kuryr_vars:
+        inventory['OSEv3']['vars'] = kuryr_vars
+
     return inventory
+
+
+def _get_kuryr_vars(cloud_client):
+    """Returns a dictionary of Kuryr variables resulting of heat stacking"""
+    # TODO: Filter the cluster stack with tags once it is supported in shade
+    hardcoded_cluster_name = 'openshift.example.com'
+    stack = cloud_client.get_stack(hardcoded_cluster_name)
+    if stack is None or stack['stack_status'] != 'CREATE_COMPLETE':
+        return None
+
+    data = {}
+    for output in stack['outputs']:
+        data[output['output_key']] = output['output_value']
+
+    settings = {}
+    # TODO: verify this shade block and complete missing vars
+    settings['kuryr_openstack_pod_subnet_id'] = data['pod_subnet']
+    settings['kuryr_openstack_worker_nodes_subnet_id'] = data['vm_subnet']
+    settings['kuryr_openstack_service_subnet_id'] = data['service_subnet']
+    settings['kuryr_openstack_pod_sg_id'] = data['pod_access_sg_id']
+    settings['kuryr_openstack_pod_project_id'] = (
+        cloud_client.current_project_id)
+
+    settings['kuryr_openstack_auth_url'] = cloud_client.auth['auth_url']
+    settings['kuryr_openstack_username'] = cloud_client.auth['username']
+    settings['kuryr_openstack_password'] = cloud_client.auth['password']
+    settings['kuryr_openstack_user_domain_name'] = (
+        cloud_client.auth['user_domain_id'])
+    settings['kuryr_openstack_project_id'] = cloud_client.current_project_id
+    settings['kuryr_openstack_project_domain_name'] = (
+        cloud_client.auth['project_domain_id'])
+    return settings
 
 
 if __name__ == '__main__':

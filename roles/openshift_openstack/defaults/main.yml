@@ -55,6 +55,8 @@ openshift_openstack_app_subdomain: "apps"
 openshift_openstack_clusterid: openshift
 openshift_openstack_stack_name: "{{ openshift_openstack_clusterid }}.{{ openshift_openstack_public_dns_domain }}"
 openshift_openstack_subnet_prefix: "192.168.99"
+openshift_openstack_kuryr_service_subnet_prefix: "172.30"
+openshift_openstack_kuryr_pod_subnet_cidr: "10.11.0.0/16"
 openshift_openstack_master_hostname: master
 openshift_openstack_infra_hostname: infra-node
 openshift_openstack_node_hostname: app-node
