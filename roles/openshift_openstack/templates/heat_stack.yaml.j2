@@ -108,7 +108,7 @@ resources:
         str_replace:
           template: subnet_16_prefix.0.1
           params:
-            subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+            subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
       vip_subnet: { get_resource: service_subnet }
 
   api_lb_listener:
@@ -177,24 +177,24 @@ resources:
         str_replace:
           template: subnet_16_prefix.0.0/16
           params:
-            subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+            subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
       gateway_ip:
         str_replace:
           template: subnet_16_prefix.255.254
           params:
-            subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+            subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
       enable_dhcp: False
       allocation_pools:
         - start:
             str_replace:
               template: subnet_16_prefix.128.1
               params:
-                subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+                subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
           end:
             str_replace:
               template: subnet_16_prefix.255.253
               params:
-                subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+                subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
       name:
         str_replace:
           template: openshift-ansible-cluster_id-service-subnet
@@ -292,7 +292,7 @@ resources:
               str_replace:
                 template: subnet_16_prefix.255.254
                 params:
-                  subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+                  subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
         name:
           str_replace:
             template: openshift-ansible-cluster_id-service-subnet-router-port
@@ -364,7 +364,7 @@ resources:
           str_replace:
             template: subnet_16_prefix.0.0/16
             params:
-              subnet_16_prefix: {{ openshift_openstack_kuryr_service_subnet_prefix }}
+              subnet_16_prefix: "{{ openshift_openstack_kuryr_service_subnet_prefix }}"
       - ethertype: IPv4
         remote_ip_prefix:
           str_replace:
