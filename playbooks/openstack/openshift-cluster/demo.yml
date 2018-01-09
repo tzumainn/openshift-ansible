@@ -1,0 +1,12 @@
+---
+- name: Pre-requisites
+  hosts: localhost
+  connection: local
+  become: openshift
+  gather_facts: no
+  tasks:
+  - name: Check the prerequisites for cluster provisioning in OpenStack
+    sudo: no
+    shell: . /root/keystonerc && ansible-playbook --user openshift -i /root/inventory /root/openshift-ansible/playbooks/openstack/openshift-cluster/provision_install.yml -e openshift_repos_enable_testing=true
+    args:
+      executable: /bin/bash
