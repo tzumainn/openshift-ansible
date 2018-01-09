@@ -4,6 +4,6 @@
   gather_facts: no
   tasks:
   - name: MAINN TEST 2
-    shell: . keystonerc && ansible-playbook --private-key .ssh/id_rsa.pub --user openshift -i demo/inventory playbooks/openstack/openshift-cluster/provision_install.yml -e openshift_repos_enable_testing=true
+    shell: . `pwd`/keystonerc && `whoami` &&ansible-playbook --private-key .ssh/id_rsa.pub --user openshift -i demo/inventory playbooks/openstack/openshift-cluster/provision_install.yml -e openshift_repos_enable_testing=true
     args:
       executable: /bin/bash
