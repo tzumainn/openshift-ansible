@@ -2,7 +2,8 @@
 - name: Pre-requisites
   hosts: localhost
   connection: local
-  become: root
+  become: true
+  become_user: root
   gather_facts: no
   tasks:
   - name: Check the prerequisites for cluster provisioning in OpenStack
