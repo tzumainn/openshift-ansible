@@ -4,6 +4,6 @@
   gather_facts: no
   tasks:
   - name: Check the prerequisites for cluster provisioning in OpenStack
-    shell: . /var/lib/awx/demo/keystonerc && ansible-playbook --user openshift -i /var/lib/awx/demo/inventory /var/lib/awx/demo/openshift-ansible/playbooks/openstack/openshift-cluster/provision_install.yml -e openshift_repos_enable_testing=true
+    shell: . /var/lib/awx/demo/keystonerc && ansible-playbook --private-key /var/lib/awx/.ssh/id_rsa.pub --user openshift -i /var/lib/awx/demo/inventory /var/lib/awx/demo/openshift-ansible/playbooks/openstack/openshift-cluster/provision_install.yml -e openshift_repos_enable_testing=true
     args:
       executable: /bin/bash
