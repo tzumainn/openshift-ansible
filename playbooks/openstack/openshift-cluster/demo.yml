@@ -1,3 +1,24 @@
+- name: Collect facts from Openstack instances - workaround
+  hosts: all
+  vars:
+  tasks:
+  - include_vars:
+      # file: "{{ lookup('file', '/var/tmp/openstack_creds') }}"
+      file: '/var/tmp/openstack_creds'
+      name: os_creds
+  - os_server_facts:
+      timeout: 60
+    environment:
+      OS_USERNAME: "{{ os_creds.clouds.mycloud.auth.username }}"
+      OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
+      OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
+      OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
+      OS_USER_DOMAIN_NAME:      "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+      OS_PROJECT_DOMAIN_NAME:   "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+    register: myfacts
+  - debug:
+      var: myfacts
+
 - name: Pre-requisites
   hosts: localhost
   connection: local
