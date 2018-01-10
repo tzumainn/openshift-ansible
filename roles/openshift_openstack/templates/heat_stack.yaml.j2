@@ -980,7 +980,7 @@ resources:
               template: sub_type_k8s_type-%index%.cluster_id
               params:
                 cluster_id: {{ openshift_openstack_stack_name }}
-                sub_type_k8s_type: {{ openshift_openstack_node_hostname }}
+                sub_type_k8s_type: {{ openshift_openstack_baremetal_node_hostname }}
           cluster_env: {{ openshift_openstack_public_dns_domain }}
           cluster_id:  {{ openshift_openstack_stack_name }}
           group:

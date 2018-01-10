@@ -194,13 +194,15 @@ outputs:
         - addr
 
 conditions:
-  no_floating: {not: { get_param: attach_float_net} }
+  no_floating: {or: [{not: { get_param: attach_float_net} }, { equals: [{ get_param: subtype }, 'bm_app'] }] }
 {% if openshift_use_flannel|default(False)|bool %}
   no_data_subnet: {not: { get_param: attach_data_net} }
 {% endif %}
 {% if use_trunk_ports|default(False)|bool %}
   app_node: { equals: [{ get_param: subtype }, 'app'] }
 {% endif %}
+
+
 
 resources:
 
