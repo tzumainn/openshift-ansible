@@ -5,5 +5,9 @@
   tasks:
   - name: MAINN TEST 7
     shell: . keystonerc && ansible-playbook --private-key .ssh/id_rsa --user openshift -i demo/inventory provision_install.yml -e "openshift_repos_enable_testing=true openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    register: playbook_result
     args:
       executable: /bin/bash
+
+  - debug:
+      var: playbook_result.stdout_lines
