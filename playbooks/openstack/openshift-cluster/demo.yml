@@ -3,7 +3,7 @@
   connection: local
   gather_facts: no
   tasks:
-  - name: MAINN TEST 6
-    shell: . keystonerc && ansible-playbook --private-key .ssh/id_rsa --user openshift -i demo/inventory provision_install.yml -e "openshift_repos_enable_testing=true openshift_openstack_num_nodes=1"
+  - name: MAINN TEST 7
+    shell: . keystonerc && ansible-playbook --private-key .ssh/id_rsa --user openshift -i demo/inventory provision_install.yml -e "openshift_repos_enable_testing=true openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
     args:
       executable: /bin/bash
