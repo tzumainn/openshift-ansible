@@ -1,5 +1,5 @@
 - name: Collect facts from Openstack instances - workaround
-  hosts: all
+  hosts: localhost
   vars:
   tasks:
   - include_vars:
@@ -13,8 +13,6 @@
       OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
       OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
       OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
-      OS_USER_DOMAIN_NAME:      "{{ os_creds.clouds.mycloud.auth.domain_name }}"
-      OS_PROJECT_DOMAIN_NAME:   "{{ os_creds.clouds.mycloud.auth.domain_name }}"
     register: myfacts
   - debug:
       var: myfacts
