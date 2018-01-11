@@ -1,6 +1,11 @@
 #cloud-config
 disable_root: true
 
+system_info:
+  default_user:
+    name: openshift
+    sudo: ["ALL=(ALL) NOPASSWD: ALL"]
+
 write_files:
   - path: /usr/local/bin/kubelet_internal_port
     permissions: 0550
@@ -39,6 +44,10 @@ write_files:
       echo "__instance_ip__ $(hostname)" >> /etc/hosts
       /usr/local/bin/kubelet_internal_port "__kubelet_mac_addr__" "__kubelet_port_uuid__" "__kubelet_ip_cidr__"
       systemctl restart neutron-openvswitch-agent.service
+  - path: /etc/sudoers.d/00-openshift-no-requiretty
+    permissions: 0440
+    content: |
+      Defaults:openshift !requiretty
 
 runcmd:
   - [sudo, /usr/local/bin/bm_node_reconfigure]
