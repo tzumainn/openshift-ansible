@@ -280,9 +280,17 @@ resources:
                   - str_split:
                     - '/'
                     - get_attr: [port, subnets, 0, cidr]
+              __kubelet_ip_cidr__:
+                list_join:
+                - ''
+                - - { get_attr: [bm_kubelet_port, fixed_ips, 0, ip_address] }
+                  - '/'
+                  - str_split:
+                    - '/'
+                    - get_attr: [bm_kubelet_port, subnets, 0, cidr]
                     - 1
-              __vxlan_mac_addr__: { get_attr: [bm_vxlan_port, mac_address] }
-              __vxlan_port_uuid__: { get_resource: bm_vxlan_port }
+              __kubelet_mac_addr__: { get_attr: [bm_kubelet_port, mac_address] }
+              __kubelet_port_uuid__: { get_resource: bm_kubelet_port }
         - get_file: user-data
       user_data_format: RAW
       user_data_update_policy: IGNORE

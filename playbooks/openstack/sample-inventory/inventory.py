@@ -40,7 +40,8 @@ def build_inventory():
 
     app = [server.name for server in cluster_hosts
            if server.metadata['host-type'] == 'node' and
-           server.metadata['sub-host-type'] == 'app']
+           (server.metadata['sub-host-type'] == 'app' or
+            server.metadata['sub-host-type'] == 'bm_app')]
 
     nodes = list(set(masters + infra_hosts + app))
 
