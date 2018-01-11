@@ -13,6 +13,9 @@
     template: "{{ stack_template_path | default(omit) }}"
     wait: yes
 
+- name: Refresh inventory cache
+  command: /var/tmp/demo/inventory/inventory.py --list --refresh-cache
+
 - name: Add the new nodes to the inventory
   meta: refresh_inventory
 
