@@ -37,7 +37,7 @@ write_files:
              -e s#__provisioning_ip_cidr__#__instance_ip_cidr__#g \
           /etc/os-net-config/baremetal_config.yaml
       os-net-config -c /etc/os-net-config/baremetal_config.yaml
-      sed -i -e s#__tenant_vxlan_ip_cidr__#__vxlan_ip_cidr__#g \
+      sed -i -e s#__tenant_vxlan_ip_cidr__#__vxlan_ip__#g \
           /etc/neutron/plugins/ml2/openvswitch_agent.ini
       sed -i -e "s/__hostname__/$(hostname)/g" \
           /etc/neutron/neutron.conf

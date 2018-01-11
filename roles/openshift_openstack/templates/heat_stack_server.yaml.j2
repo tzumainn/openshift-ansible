@@ -272,6 +272,7 @@ resources:
                     - '/'
                     - get_attr: [bm_vxlan_port, subnets, 0, cidr]
                     - 1
+              __vxlan_ip__: { get_attr: [bm_vxlan_port, fixed_ips, 0, ip_address] }
               __instance_ip_cidr__:
                 list_join:
                 - ''
