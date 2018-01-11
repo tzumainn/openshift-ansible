@@ -39,8 +39,10 @@ write_files:
       os-net-config -c /etc/os-net-config/baremetal_config.yaml
       sed -i -e s#__tenant_vxlan_ip_cidr__#__vxlan_ip__#g \
           /etc/neutron/plugins/ml2/openvswitch_agent.ini
+      restorecon /etc/neutron/plugins/ml2/openvswitch_agent.ini
       sed -i -e "s/__hostname__/$(hostname)/g" \
           /etc/neutron/neutron.conf
+      restorecon /etc/neutron/neutron.conf
       echo "__instance_ip__ $(hostname)" >> /etc/hosts
       /usr/local/bin/kubelet_internal_port "__kubelet_mac_addr__" "__kubelet_port_uuid__" "__kubelet_ip_cidr__"
       systemctl restart neutron-openvswitch-agent.service
