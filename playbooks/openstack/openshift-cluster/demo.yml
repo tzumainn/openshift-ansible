@@ -1,4 +1,4 @@
-- name: Pre-requisites
+- name: Demo
   hosts: localhost
   connection: local
   gather_facts: no
@@ -7,13 +7,13 @@
       # file: "{{ lookup('file', '/var/tmp/openstack_creds') }}"
       file: '/var/tmp/openstack_creds'
       name: os_creds
-  - name: MAINN TEST 8
+  - name: Call provisioning playbook with proper environment
     environment:
       OS_USERNAME: "{{ os_creds.clouds.mycloud.auth.username }}"
       OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
       OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
       OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
-    shell: ansible-playbook --private-key .ssh/id_rsa --user openshift -i demo/inventory provision_install.yml -e "openshift_repos_enable_testing=true openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory provision_install.yml -e "openshift_repos_enable_testing=true openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
     register: playbook_result
     args:
       executable: /bin/bash
