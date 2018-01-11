@@ -280,6 +280,8 @@ resources:
                   - str_split:
                     - '/'
                     - get_attr: [port, subnets, 0, cidr]
+                    - 1
+              __instance_ip__: { get_attr: [port, fixed_ips, 0, ip_address] }
               __kubelet_ip_cidr__:
                 list_join:
                 - ''
