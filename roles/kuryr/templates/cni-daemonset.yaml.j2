@@ -23,7 +23,7 @@ spec:
       serviceAccountName: kuryr-controller
       containers:
       - name: kuryr-cni
-        image: kuryr/cni:multipools-no-privsep
+        image: kuryr/cni:multipool-no-privsep
         imagePullPolicy: IfNotPresent
         command: [ "cni_ds_init" ]
         securityContext:
