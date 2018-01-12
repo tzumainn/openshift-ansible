@@ -9,8 +9,9 @@ environment.
 
 from __future__ import print_function
 
-import json
+from collections import defaultdict
 
+import json
 import shade
 
 
@@ -40,8 +41,13 @@ def build_inventory():
 
     app = [server.name for server in cluster_hosts
            if server.metadata['host-type'] == 'node' and
-           (server.metadata['sub-host-type'] == 'app' or
-            server.metadata['sub-host-type'] == 'bm_app')]
+           server.metadata['sub-host-type'] == 'app']
+
+    bm_app_hosts = [server for server in cluster_hosts
+              if server.metadata['host-type'] == 'node' and
+              server.metadata['sub-host-type'] == 'bm_app']
+    _update_bm_app_with_kubelet_port(bm_app_hosts, cloud.list_ports())
+    app.extend([bm_app.name for bm_app in bm_app_hosts])
 
     nodes = list(set(masters + infra_hosts + app))
 
@@ -132,11 +138,24 @@ def _get_kuryr_vars(cloud_client):
     settings['kuryr_openstack_username'] = cloud_client.auth['username']
     settings['kuryr_openstack_password'] = cloud_client.auth['password']
     settings['kuryr_openstack_user_domain_name'] = (
-        cloud_client.auth['user_domain_id'])
+        cloud_client.auth['user_domain_name'])
     settings['kuryr_openstack_project_id'] = cloud_client.current_project_id
     settings['kuryr_openstack_project_domain_name'] = (
-        cloud_client.auth['project_domain_id'])
+        cloud_client.auth['project_domain_name'])
     return settings
+
+def _update_bm_app_with_kubelet_port(hosts, ports):
+    names = set([host['name'] for host in hosts])
+    bm_ports = defaultdict(list)
+    for port in ports:
+        port_host = port['binding:host_id']
+        if port_host in names:
+            bm_ports[port_host].append(port)
+
+    for host in hosts:
+        host_bound_ports = bm_ports[host['name']]
+        kubelet_port, = [port for port in host_bound_ports if 'kubelet' in port['name']]
+        host['private_v4'] = kubelet_port['fixed_ips'][0]['ip_address']
 
 
 if __name__ == '__main__':
