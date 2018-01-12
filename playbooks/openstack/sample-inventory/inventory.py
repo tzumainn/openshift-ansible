@@ -122,7 +122,7 @@ def _get_kuryr_vars(cloud_client):
     # TODO: Filter the cluster stack with tags once it is supported in shade
     hardcoded_cluster_name = 'openshift.example.com'
     stack = cloud_client.get_stack(hardcoded_cluster_name)
-    if stack is None or stack['stack_status'] != 'CREATE_COMPLETE':
+    if stack is None or stack['stack_status'] not in ('CREATE_COMPLETE', 'UPDATE_COMPLETE'):
         return None
 
     data = {}
