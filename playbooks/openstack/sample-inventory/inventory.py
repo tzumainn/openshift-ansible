@@ -47,7 +47,8 @@ def build_inventory():
               if server.metadata['host-type'] == 'node' and
               server.metadata['sub-host-type'] == 'bm_app']
     _update_bm_app_with_kubelet_port(bm_app_hosts, cloud.list_ports())
-    app.extend([bm_app.name for bm_app in bm_app_hosts])
+    bm_app = [bm_app_host.name for bm_app_host in bm_app_hosts]
+    app.extend(bm_app)
 
     nodes = list(set(masters + infra_hosts + app))
 
@@ -66,6 +67,7 @@ def build_inventory():
     inventory['nodes'] = {'hosts': nodes}
     inventory['infra_hosts'] = {'hosts': infra_hosts}
     inventory['app'] = {'hosts': app}
+    inventory['bm_app'] = {'hosts': bm_app}
     inventory['dns'] = {'hosts': dns}
     inventory['lb'] = {'hosts': load_balancers}
 

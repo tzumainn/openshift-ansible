@@ -27,6 +27,37 @@
     setup:
 
 
+# do the thing
+- hosts: bm_app
+  become: no
+  gather_facts: no
+  tasks:
+  - name: Wait for cloud-init to finish
+    command: systemctl show cloud-init --property SubState,ActiveState
+    become: yes
+    retries: 10
+    register: result
+    ignore_errors: yes
+    until: ('ActiveState=active' in result.stdout) and ('SubState=exited' in result.stdout)
+
+  - name: Wait until the host runs the neutron agent
+    command: python agents.py
+    delegate_to: localhost
+    retries: 10
+    register: agent_list
+    until: inventory_hostname in agent_list.stdout
+
+  - name: Update the port
+    os_port:
+      state: present
+      name: "{{ kubelet_port_id }}"
+      device_owner: compute:shiftstack
+    delegate_to: localhost
+
+
+
+
+
 # NOTE(shadower): the (internal) DNS must be functional at this point!!
 # That will have happened in provision.yml if nsupdate was configured.
 
