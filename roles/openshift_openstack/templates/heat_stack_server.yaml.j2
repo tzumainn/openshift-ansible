@@ -392,6 +392,7 @@ resources:
       fixed_ips:
         - subnet: { get_param: kubelet_subnet }
       security_groups: { get_param: secgrp }
+      value_specs: {"binding:host_id": { get_param: name} }
 
 {% if not openshift_openstack_provider_network_name %}
   floating-ip:
