@@ -19,7 +19,7 @@ spec:
       automountServiceAccountToken: true
       hostNetwork: true
       containers:
-      - image: kuryr/controller:multipools
+      - image: kuryr/controller:multipools-fix
         imagePullPolicy: IfNotPresent
         name: controller
         terminationMessagePath: "/dev/termination-log"
