@@ -37,4 +37,6 @@ spec:
         configMap:
           name: kuryr-config
           defaultMode: 0666
+      nodeSelector:
+        pod_vif: nested-vlan
       restartPolicy: Always
