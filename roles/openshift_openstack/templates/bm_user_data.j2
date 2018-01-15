@@ -40,7 +40,7 @@ write_files:
       sed -i -e s#__tenant_vxlan_ip_cidr__#__vxlan_ip__#g \
           /etc/neutron/plugins/ml2/openvswitch_agent.ini
       restorecon /etc/neutron/plugins/ml2/openvswitch_agent.ini
-      sed -i -e "s/__hostname__/$(hostname)/g" \
+      sed -i -e "s/__hostname__/__kubelet_ip__/g" \
           /etc/neutron/neutron.conf
       restorecon /etc/neutron/neutron.conf
       echo "__instance_ip__ $(hostname)" >> /etc/hosts

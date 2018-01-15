@@ -292,6 +292,7 @@ resources:
                     - '/'
                     - get_attr: [bm_kubelet_port, subnets, 0, cidr]
                     - 1
+              __kubelet_ip__: { get_attr: [bm_kubelet_port, fixed_ips, 0, ip_address] }
               __kubelet_mac_addr__: { get_attr: [bm_kubelet_port, mac_address] }
               __kubelet_port_uuid__: { get_resource: bm_kubelet_port }
         - get_file: user-data
