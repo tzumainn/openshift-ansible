@@ -15,7 +15,7 @@
       OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
       OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
       OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
-    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory prerequisites.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    shell: ansible-playbook -vv --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory prerequisites.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
     register: playbook_result
     args:
       executable: /bin/bash
@@ -39,7 +39,7 @@
       OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
       OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
       OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
-    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory provision.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    shell: ansible-playbook -vv --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory provision.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
     register: playbook_result
     args:
       executable: /bin/bash
@@ -63,7 +63,7 @@
       OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
       OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
       OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
-    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory install.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    shell: ansible-playbook -vv --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory install.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
     register: playbook_result
     args:
       executable: /bin/bash
