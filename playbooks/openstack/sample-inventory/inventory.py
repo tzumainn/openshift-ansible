@@ -150,11 +150,14 @@ def _get_kuryr_vars(cloud_client):
 
 def _update_bm_app_with_kubelet_port(hosts, ports):
     names = set([host['name'] for host in hosts])
+    agent_names = dict([(host['metadata']['neutron_agent_name'], host['name']) for host in hosts if 'neutron_agent_name' in host['metadata']])
     bm_ports = defaultdict(list)
     for port in ports:
         port_host = port['binding:host_id']
         if port_host in names:
             bm_ports[port_host].append(port)
+        elif port_host in agent_names:
+            bm_ports[agent_names[port_host]].append(port)
 
     for host in hosts:
         host_bound_ports = bm_ports[host['name']]
