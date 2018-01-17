@@ -11,6 +11,7 @@
     name: "{{ openshift_openstack_stack_name }}"
     state: "{{ openshift_openstack_stack_state }}"
     template: "{{ stack_template_path | default(omit) }}"
+    timeout: 5000
     wait: yes
 
 - name: Add the new nodes to the inventory
