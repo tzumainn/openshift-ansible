@@ -299,12 +299,21 @@ resources:
       user_data_format: RAW
       user_data_update_policy: IGNORE
       metadata:
-        group: { get_param: group }
-        environment: { get_param: cluster_env }
-        clusterid: { get_param: cluster_id }
-        host-type: { get_param: type }
-        sub-host-type:    { get_param: subtype }
-        node_labels: { get_param: node_labels }
+        if:
+        - bm_app_node
+        - group: { get_param: group }
+          environment: { get_param: cluster_env }
+          clusterid: { get_param: cluster_id }
+          host-type: { get_param: type }
+          sub-host-type: { get_param: subtype }
+          node_labels: { get_param: node_labels }
+          neutron_agent_name: { get_attr: [bm_kubelet_port, fixed_ips, 0, ip_address] }
+        - group: { get_param: group }
+          environment: { get_param: cluster_env }
+          clusterid: { get_param: cluster_id }
+          host-type: { get_param: type }
+          sub-host-type: { get_param: subtype }
+          node_labels: { get_param: node_labels }
       scheduler_hints: { get_param: scheduler_hints }
 
 {% if use_trunk_ports|default(false)|bool %}
@@ -393,7 +402,8 @@ resources:
       fixed_ips:
         - subnet: { get_param: kubelet_subnet }
       security_groups: { get_param: secgrp }
-      value_specs: {"binding:host_id": { get_param: name} }
+      value_specs:
+        "binding:host_id": { get_param: name } 
 
 {% if not openshift_openstack_provider_network_name %}
   floating-ip:

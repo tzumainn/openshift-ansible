@@ -7,6 +7,17 @@
       name: openshift_openstack
       tasks_from: provision.yml
 
+- hosts: bm_app
+  become: no
+  gather_facts: no
+  tasks:
+  - name: Update the port binding host id to match its ip
+    command: python update_binding_host_id.py {{ inventory_hostname }}
+    delegate_to: localhost
+    retries: 10
+    register: update_port
+    until: update_port is succeeded
+
 
 # NOTE(shadower): Bring in the host groups:
 - name: evaluate groups
@@ -41,11 +52,11 @@
     until: ('ActiveState=active' in result.stdout) and ('SubState=exited' in result.stdout)
 
   - name: Wait until the host runs the neutron agent
-    command: python agents.py
+    command: python new_agents.py {{ inventory_hostname }}
     delegate_to: localhost
     retries: 10
     register: agent_list
-    until: inventory_hostname in agent_list.stdout
+    until: agent_list is succeeded
 
   - name: Update the port
     os_port:
@@ -53,9 +64,6 @@
       name: "{{ kubelet_port_name }}"
       device_owner: compute:shiftstack
     delegate_to: localhost
-
-
-
 
 
 # NOTE(shadower): the (internal) DNS must be functional at this point!!
