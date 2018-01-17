@@ -187,6 +187,9 @@ ansible_user: openshift
 #  app:
 #    region: primary
 #    pod_vif: nested-vlan
+#  bm_app:
+#    region: primary
+#    pod_vif: neutron-vif
 #  infra:
 #    region: infra
 #    pod_vif: nested-vlan

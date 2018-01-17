@@ -45,7 +45,7 @@ openshift_override_hostname_check: true
 
 # For POCs or demo environments that are using smaller instances than
 # the official recommended values for RAM and DISK, uncomment the line below.
-#openshift_disable_check: disk_availability,memory_availability
+#openshift_disable_check: disk_availability,memory_availability,docker_storage
 
 # NOTE(shadower): Always switch to root on the OSEv3 nodes.
 # openshift-ansible requires an explicit `become`.
@@ -56,3 +56,8 @@ ansible_become: true
 #openshift_use_openshift_sdn: false
 #openshift_use_flannel: true
 #flannel_interface: eth1
+
+# # Do to some problems during installation the next needs to be disabled
+# # Remove it when fixed
+openshift_enable_service_catalog: false
+template_service_broker_install: false
