@@ -189,3 +189,4 @@ ansible_user: openshift
 #    pod_vif: nested-vlan
 #  infra:
 #    region: infra
+#    pod_vif: nested-vlan

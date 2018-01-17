@@ -211,7 +211,7 @@ conditions:
   no_data_subnet: {not: { get_param: attach_data_net} }
 {% endif %}
 {% if use_trunk_ports|default(False)|bool %}
-  app_node: { equals: [{ get_param: subtype }, 'app'] }
+  trunk_node: {or: [{ equals: [{ get_param: subtype }, 'app'] }, { equals: [{ get_param: subtype }, 'infra'] }] }
 {% endif %}
   bm_app_node:
     equals:
@@ -240,7 +240,7 @@ resources:
 {% else %}
 {% if use_trunk_ports|default(False)|bool %}
         if:
-        - app_node
+        - trunk_node
         - - port:  { get_attr: [trunk_port, port_id]}
         - - port:  { get_resource: port }
 {% else %}
@@ -318,7 +318,7 @@ resources:
 {% if use_trunk_ports|default(false)|bool %}
   trunk_port:
     type: OS::Neutron::Trunk
-    condition: app_node
+    condition: trunk_node
     properties:
       name: { get_param: name }
       port: { get_resource: port }
@@ -336,13 +336,13 @@ resources:
 
   segmentation:
     type: segmentation_ids.yaml
-    condition: app_node
+    condition: trunk_node
     properties:
       number_of_vlan_ids: {{ openshift_kuryr_precreate_subports }}
 
   subports:
     type: OS::Heat::ResourceGroup
-    condition: app_node
+    condition: trunk_node
     properties:
       count: {{ openshift_kuryr_precreate_subports }}
       resource_def:
