@@ -1,0 +1,71 @@
+- name: Prerequisites
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_vars:
+      # file: "{{ lookup('file', '/var/tmp/openstack_creds') }}"
+      file: '/var/tmp/openstack_creds'
+      name: os_creds
+  - name: Call prerequisites playbook with proper environment
+    environment:
+      OS_USERNAME: "{{ os_creds.clouds.mycloud.auth.username }}"
+      OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
+      OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
+      OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
+      OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+      OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory prerequisites.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    register: playbook_result
+    args:
+      executable: /bin/bash
+  - debug:
+      var: playbook_result.stdout_lines
+
+- name: Provision
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_vars:
+      # file: "{{ lookup('file', '/var/tmp/openstack_creds') }}"
+      file: '/var/tmp/openstack_creds'
+      name: os_creds
+  - name: Call provision playbook with proper environment
+    environment:
+      OS_USERNAME: "{{ os_creds.clouds.mycloud.auth.username }}"
+      OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
+      OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
+      OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
+      OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+      OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory provision.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    register: playbook_result
+    args:
+      executable: /bin/bash
+  - debug:
+      var: playbook_result.stdout_lines
+
+- name: Install
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_vars:
+      # file: "{{ lookup('file', '/var/tmp/openstack_creds') }}"
+      file: '/var/tmp/openstack_creds'
+      name: os_creds
+  - name: Call install playbook with proper environment
+    environment:
+      OS_USERNAME: "{{ os_creds.clouds.mycloud.auth.username }}"
+      OS_PASSWORD: "{{ os_creds.clouds.mycloud.auth.password }}"
+      OS_AUTH_URL: "{{ os_creds.clouds.mycloud.auth.auth_url }}"
+      OS_PROJECT_NAME:          "{{ os_creds.clouds.mycloud.auth.project_name }}"
+      OS_USER_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+      OS_PROJECT_DOMAIN_NAME:          "{{ os_creds.clouds.mycloud.auth.domain_name }}"
+    shell: ansible-playbook --private-key /var/tmp/.ssh/id_rsa --user openshift -i /var/tmp/demo/inventory install.yml -e "openshift_openstack_num_baremetal_nodes={{ openshift_openstack_num_baremetal_nodes }} openshift_openstack_num_nodes={{ openshift_openstack_num_nodes }}"
+    register: playbook_result
+    args:
+      executable: /bin/bash
+  - debug:
+      var: playbook_result.stdout_lines
