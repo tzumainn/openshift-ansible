@@ -186,5 +186,6 @@ ansible_user: openshift
 #openshift_openstack_cluster_node_labels:
 #  app:
 #    region: primary
+#    pod_vif: nested-vlan
 #  infra:
 #    region: infra
