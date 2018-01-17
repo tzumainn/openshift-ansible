@@ -7,27 +7,41 @@ system_info:
     sudo: ["ALL=(ALL) NOPASSWD: ALL"]
 
 write_files:
-  - path: /usr/local/bin/kubelet_internal_port
-    permissions: 0550
+  - path: /usr/sbin/ifup-local
+    permissions: 0770
     content: |
-      #!/bin/bash -xv
-      function ovs_bind_for_kubelet() {
-          local port_mac
-          local port_id
-          local port_cidr
-          port_mac=$1
-          port_id=$2
-          port_cidr=$3
-          ovs-vsctl -- --may-exist add-port br-int kubelet \
-              -- set Interface kubelet type=internal \
-              -- set Interface kubelet external-ids:iface-status=active \
-              -- set Interface kubelet external-ids:attached-mac="$port_mac" \
-              -- set Interface kubelet external-ids:iface-id="$port_id"
-          ip link set dev kubelet address "$port_mac"
-          ip link set dev kubelet up
-          ip addr add "$port_cidr" dev kubelet
-      }
-      ovs_bind_for_kubelet "$@"
+      #!/bin/bash
+      ORIGIN_DNS='/etc/origin/node/resolv.conf'
+      
+      DEVICE="$1"
+      if [[ "$DEVICE" == "kubelet" ]]; then
+          . "/etc/sysconfig/network-scripts/ifcfg-${DEVICE}"
+          NEW_RESOLV="$(mktemp)"
+          echo "nameserver ${DNS1}" >> "$NEW_RESOLV"
+          echo "nameserver ${DNS2}" >> "$NEW_RESOLV"
+          mkdir -p "$(dirname ${ORIGIN_DNS})"
+          cp "$NEW_RESOLV" "$ORIGIN_DNS"
+          restorecon "$ORIGIN_DNS"
+      fi
+  - path: /etc/sysconfig/network-scripts/ifcfg-kubelet
+    permissions: 0664
+    content: |
+      DEVICE=kubelet
+      ONBOOT=yes
+      HOTPLUG=no
+      NM_CONTROLLED=yes
+      DEVICETYPE=ovs
+      TYPE=OVSIntPort
+      OVS_BRIDGE=br-int
+      OVS_EXTRA="set Interface ${DEVICE} external-ids:iface-status=active -- set Interface ${DEVICE} external-ids:attached-mac=__kubelet_mac_addr__ -- set Interface ${DEVICE} external-ids:iface-id=__kubelet_port_uuid__"
+      MACADDR=__kubelet_mac_addr__
+      BOOTPROTO=static
+      IPADDR=__kubelet_ip__
+      PREFIX=__kubelet_prefix__
+      #GATEWAY=__kubelet_gateway__
+      PEERDNS=yes
+      DNS1=__kubelet_dns1__
+      DNS2=__kubelet_dns2__
   - path: /usr/local/bin/bm_node_reconfigure
     permissions: 0550
     content: |
@@ -44,7 +58,6 @@ write_files:
           /etc/neutron/neutron.conf
       restorecon /etc/neutron/neutron.conf
       echo "__instance_ip__ $(hostname)" >> /etc/hosts
-      /usr/local/bin/kubelet_internal_port "__kubelet_mac_addr__" "__kubelet_port_uuid__" "__kubelet_ip_cidr__"
       systemctl restart neutron-openvswitch-agent.service
   - path: /etc/sudoers.d/00-openshift-no-requiretty
     permissions: 0440
@@ -53,3 +66,5 @@ write_files:
 
 runcmd:
   - [sudo, /usr/local/bin/bm_node_reconfigure]
+  - [sudo, systemctl, disable, neutron-ovs-cleanup]
+  - [sudo, systemctl, restart, network.service]

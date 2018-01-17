@@ -283,18 +283,17 @@ resources:
                     - get_attr: [port, subnets, 0, cidr]
                     - 1
               __instance_ip__: { get_attr: [port, fixed_ips, 0, ip_address] }
-              __kubelet_ip_cidr__:
-                list_join:
-                - ''
-                - - { get_attr: [bm_kubelet_port, fixed_ips, 0, ip_address] }
-                  - '/'
-                  - str_split:
-                    - '/'
-                    - get_attr: [bm_kubelet_port, subnets, 0, cidr]
-                    - 1
               __kubelet_ip__: { get_attr: [bm_kubelet_port, fixed_ips, 0, ip_address] }
+              __kubelet_prefix__: 
+                str_split:
+                - '/'
+                - get_attr: [bm_kubelet_port, subnets, 0, cidr]
+                - 1
               __kubelet_mac_addr__: { get_attr: [bm_kubelet_port, mac_address] }
               __kubelet_port_uuid__: { get_resource: bm_kubelet_port }
+              __kubelet_gateway__: { get_attr: [bm_kubelet_port, subnets, 0, gateway_ip] }
+              __kubelet_dns1__: { get_attr: [bm_kubelet_port, subnets, 0, dns_nameservers, 0] }
+              __kubelet_dns2__: { get_attr: [bm_kubelet_port, subnets, 0, dns_nameservers, 1] }
         - get_file: user-data
       user_data_format: RAW
       user_data_update_policy: IGNORE
