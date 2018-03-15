@@ -64,7 +64,7 @@ def main():
         module.fail_json(msg='shade is required for this module')
 
     try:
-        cloud = shade.openstack_cloud()
+        cloud = shade.openstack_cloud(cloud='devstack')
     # pylint: disable=broad-except
     except Exception:
         module.fail_json(msg='Failed to connect to the cloud')

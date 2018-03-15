@@ -117,7 +117,7 @@ def _get_hostvars(server, docker_storage_mountpoints):
 
 def build_inventory():
     '''Build the dynamic inventory.'''
-    cloud = shade.openstack_cloud()
+    cloud = shade.openstack_cloud(cloud='devstack')
 
     # TODO(shadower): filter the servers based on the `OPENSHIFT_CLUSTER`
     # environment variable.
