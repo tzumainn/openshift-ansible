@@ -67,6 +67,7 @@
 - name: Try to get network facts
   os_networks_facts:
     name: "{{ openshift_openstack_external_network_name }}"
+    cloud: "devstack"
   register: network_result
   when: not openshift_openstack_provider_network_name|default(None)
 - name: Check that network is available

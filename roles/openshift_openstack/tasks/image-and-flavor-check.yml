@@ -1,6 +1,7 @@
 ---
 - name: Try to get flavor facts
   os_flavor_facts:
+    cloud: "devstack"
     name: "{{ item.flavor }}"
   register: flavor_result
 
@@ -11,6 +12,7 @@
 
 - name: Try to get image facts
   os_image_facts:
+    cloud: "devstack"
     image: "{{ item.image }}"
   register: image_result
 

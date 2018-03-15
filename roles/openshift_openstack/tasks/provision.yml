@@ -59,6 +59,7 @@
   ignore_errors: True
   register: stack_create
   os_stack:
+    cloud: "devstack"
     name: "{{ openshift_openstack_stack_name }}"
     state: "{{ openshift_openstack_stack_state }}"
     template: "{{ stack_template_path | default(omit) }}"
@@ -87,6 +88,7 @@
 
 - name: Legacy LBaaSv2 SG OpenShift API correction
   os_port:
+    cloud: "devstack"
     state: present
     name: "{{ openshift_openstack_api_lb_port_id }}"
     security_groups:

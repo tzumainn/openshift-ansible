@@ -1,6 +1,7 @@
 ---
 - name: Attach the volume to the VM
   os_server_volume:
+    cloud: "devstack"
     state: present
     server: "{{ groups['masters'][0] }}"
     volume: "{{ cinder_volume }}"
@@ -54,6 +55,7 @@
 
 - name: Detach the volume from the VM
   os_server_volume:
+    cloud: "devstack"
     state: absent
     server: "{{ groups['masters'][0] }}"
     volume: "{{ cinder_volume }}"
