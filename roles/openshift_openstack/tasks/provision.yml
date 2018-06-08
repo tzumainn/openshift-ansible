@@ -10,18 +10,18 @@
   ignore_errors: True
 
 - name: validate the Heat template
-  command: openstack orchestration template validate -t {{ stack_template_path }}
+  command: openstack --os-cloud devstack  orchestration template validate -t {{ stack_template_path }}
   register: template_validation_output
   when: openstack_cli_exists is succeeded
 
 - name: Check if the stack exists
-  command: openstack stack show {{ openshift_openstack_stack_name }}
+  command: openstack --os-cloud devstack stack show {{ openshift_openstack_stack_name }}
   ignore_errors: True
   register: stack_exists
   when: openstack_cli_exists is succeeded
 
 - name: Dry-run the stack (create)
-  command: openstack stack create --dry-run -t {{ stack_template_path }} {{ openshift_openstack_stack_name }}
+  command: openstack --os-cloud devstack stack create --dry-run -t {{ stack_template_path }} {{ openshift_openstack_stack_name }}
   ignore_errors: True
   register: stack_create_dry_run_output
   when:
@@ -29,7 +29,7 @@
   - stack_exists is failed
 
 - name: Dry-run the stack (update)
-  command: openstack stack update --dry-run -t {{ stack_template_path }} {{ openshift_openstack_stack_name }}
+  command: openstack --os-cloud devstack stack update --dry-run -t {{ stack_template_path }} {{ openshift_openstack_stack_name }}
   ignore_errors: True
   register: stack_update_dry_run_output
   when:
@@ -66,7 +66,7 @@
     wait: yes
 
 - name: get errors in stack creation, if any
-  command: openstack stack failures list {{ openshift_openstack_stack_name }}
+  command: openstack --os-cloud devstack stack failures list {{ openshift_openstack_stack_name }}
   register: stack_create_failures
   when:
   - openstack_cli_exists is succeeded
