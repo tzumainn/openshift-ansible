@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   any_errors_fatal: true
   tasks:
   - name: Check dependencies and OpenStack prerequisites

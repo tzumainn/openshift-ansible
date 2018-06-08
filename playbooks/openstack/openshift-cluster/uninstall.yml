@@ -16,7 +16,7 @@
     - rhsub_pass is defined
 
 - name: Clean DNS entries
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: Clean DNS entries
     import_role:
@@ -27,7 +27,7 @@
     - openshift_openstack_external_nsupdate_keys.private is defined or openshift_openstack_external_nsupdate_keys.public is defined
 
 - name: Remove OpenStack resources
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: Remove OpenStack resources
     import_role:

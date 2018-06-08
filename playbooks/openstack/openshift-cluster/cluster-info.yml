@@ -1,6 +1,6 @@
 ---
 - name: Show information about the cluster
-  hosts: localhost
+  hosts: ansible_host
   become: no
   gather_facts: no
   tasks:

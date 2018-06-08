@@ -59,7 +59,7 @@ def base_openshift_inventory(cluster_hosts):
     inventory['glusterfs'] = {'hosts': cns}
     inventory['dns'] = {'hosts': dns}
     inventory['lb'] = {'hosts': load_balancers}
-    inventory['localhost'] = {'ansible_connection': 'local'}
+    inventory['ansible_host'] = {'ansible_connection': 'ssh', 'ansible_user': 'centos', 'ansible_host': '128.31.26.92'}
 
     return inventory
 
@@ -152,7 +152,7 @@ def build_inventory():
     stout = _get_stack_outputs(cloud)
     if stout is not None:
         try:
-            inventory['localhost'].update({
+            inventory['ansible_host'].update({
                 'openshift_openstack_api_lb_provider':
                 stout['api_lb_provider'],
                 'openshift_openstack_api_lb_port_id':
@@ -168,11 +168,11 @@ def build_inventory():
         except KeyError:
             pass  # Internal LB not specified
 
-        inventory['localhost']['openshift_openstack_private_api_ip'] = \
+        inventory['ansible_host']['openshift_openstack_private_api_ip'] = \
             stout.get('private_api_ip')
-        inventory['localhost']['openshift_openstack_public_api_ip'] = \
+        inventory['ansible_host']['openshift_openstack_public_api_ip'] = \
             stout.get('public_api_ip')
-        inventory['localhost']['openshift_openstack_public_router_ip'] = \
+        inventory['ansible_host']['openshift_openstack_public_router_ip'] = \
             stout.get('public_router_ip')
 
         try:
