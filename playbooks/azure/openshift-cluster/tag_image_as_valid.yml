@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   gather_facts: no
   tasks:
   - name: add valid tag to the image

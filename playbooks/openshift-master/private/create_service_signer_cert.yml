@@ -1,6 +1,6 @@
 ---
 - name: Create local temp directory for syncing certs
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -69,7 +69,7 @@
     when: not (hostvars[groups.oo_first_master.0].service_signer_cert_stat.stat.exists | bool)
 
 - name: Delete local temp directory
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

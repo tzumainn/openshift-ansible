@@ -1,6 +1,6 @@
 ---
 - name: create the node scale groups
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: yes
   tasks:

@@ -1,7 +1,7 @@
 #!/usr/bin/ansible-playbook
 ---
 - name: Accept nodes
-  hosts: localhost
+  hosts: ansible_host
   gather_facts: no
   tasks:
   - name: Alert user to variables needed - clusterid

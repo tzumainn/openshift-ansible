@@ -122,7 +122,7 @@
   - role: openshift_ca
 
 - name: Create temp directory for syncing certs
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -264,7 +264,7 @@
       state: absent
 
 - name: Delete temporary directory on localhost
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

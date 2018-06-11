@@ -1,6 +1,6 @@
 ---
 - name: Alert user to variables needed
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: Alert user to variables needed - clusterid
     debug:
@@ -11,7 +11,7 @@
       msg: "openshift_aws_region={{ openshift_aws_region | default('us-east-1') }}"
 
 - name: Setup the master node group
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - import_role:
       name: openshift_aws

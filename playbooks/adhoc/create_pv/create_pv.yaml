@@ -7,7 +7,7 @@
 #                  create_pv.yaml
 #
 - name: Create a volume and attach it to master
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   become: no
   gather_facts: no

@@ -1,6 +1,6 @@
 ---
 - name: Create s3 bucket
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - name: create s3 bucket

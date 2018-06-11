@@ -5,7 +5,7 @@
 
 - import_playbook: provision.yml
 
-- hosts: localhost
+- hosts: ansible_host
   tasks:
   - meta: refresh_inventory
 

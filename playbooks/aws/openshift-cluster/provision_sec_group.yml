@@ -2,7 +2,7 @@
 # If running this play directly, be sure the variable
 # 'openshift_aws_node_group_type' is set correctly for your usage.
 # See build_ami.yml for an example.
-- hosts: localhost
+- hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

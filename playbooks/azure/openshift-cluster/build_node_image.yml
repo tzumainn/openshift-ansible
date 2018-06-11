@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   gather_facts: no
   tasks:
   - name: calculate input image
@@ -72,7 +72,7 @@
     async: 1
     poll: 0
 
-- hosts: localhost
+- hosts: ansible_host
   gather_facts: no
   tasks:
   - set_fact:

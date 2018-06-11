@@ -1,6 +1,6 @@
 ---
 - name: Publish the most recent image
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

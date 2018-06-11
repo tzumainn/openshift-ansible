@@ -1,6 +1,6 @@
 ---
 - name: Create elb
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - name: provision elb

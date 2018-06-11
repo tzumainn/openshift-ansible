@@ -1,6 +1,6 @@
 ---
 - name: Setup the master node group
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - import_role:
       name: openshift_aws

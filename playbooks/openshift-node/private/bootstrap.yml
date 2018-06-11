@@ -14,7 +14,7 @@
           start: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
 
 - name: Only target nodes that have not yet been bootstrapped
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - add_host:
       name: "{{ item }}"

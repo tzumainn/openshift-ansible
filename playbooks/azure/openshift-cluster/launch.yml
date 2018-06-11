@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   gather_facts: no
   tasks:
   - import_role:

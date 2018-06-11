@@ -1,6 +1,6 @@
 ---
 - name: Verify prerequisites for image build
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -10,7 +10,7 @@
     when: openshift_gcp_base_image is undefined
 
 - name: Provision ssh key
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -20,7 +20,7 @@
       tasks_from: provision_ssh_keys.yml
 
 - name: Launch image build instance
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -92,7 +92,7 @@
       tasks_from: frequent_log_rotation.yml
 
 - name: Commit image
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - name: Terminate the image build instance

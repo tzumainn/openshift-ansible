@@ -2,7 +2,7 @@
 # If running this play directly, be sure the variable
 # 'openshift_aws_ami_name' is set correctly for your usage.
 # See build_ami.yml for an example.
-- hosts: localhost
+- hosts: ansible_host
   connection: local
   become: no
   tasks:

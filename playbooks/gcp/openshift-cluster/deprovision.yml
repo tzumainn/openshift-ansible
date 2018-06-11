@@ -1,7 +1,7 @@
 # This playbook terminates a running cluster
 ---
 - name: Terminate running cluster and remove all supporting resources in GCE
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - include_role:

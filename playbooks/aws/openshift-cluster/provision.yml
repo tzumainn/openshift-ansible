@@ -1,6 +1,6 @@
 ---
 - name: Alert user to variables needed
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: Alert user to variables needed - clusterid
     debug:
@@ -15,7 +15,7 @@
 - import_playbook: provision_elb.yml
 
 - name: Create the master node group
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: provision cluster
     import_role:

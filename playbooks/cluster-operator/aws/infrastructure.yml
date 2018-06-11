@@ -1,6 +1,6 @@
 ---
 - name: Alert user to variables needed
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: Alert user to variables needed - clusterid
     debug:

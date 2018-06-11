@@ -1,6 +1,6 @@
 ---
 - name: Set up the connection variables for retrieving inventory from GCE
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

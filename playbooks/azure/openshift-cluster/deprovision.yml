@@ -2,7 +2,7 @@
 # Warning, use with caution, this will remove all resources
 # from the group.
 
-- hosts: localhost
+- hosts: ansible_host
   gather_facts: no
   tasks:
   - name: delete resource group

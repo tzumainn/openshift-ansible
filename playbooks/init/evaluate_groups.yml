@@ -1,6 +1,6 @@
 ---
 - name: Populate config host groups
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

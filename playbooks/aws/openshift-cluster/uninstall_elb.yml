@@ -1,6 +1,6 @@
 ---
 - name: Delete elb
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - name: deprovision elb

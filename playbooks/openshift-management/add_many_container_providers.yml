@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   tasks:
   - name: Ensure the container provider configuration is defined
     assert:

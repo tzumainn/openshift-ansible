@@ -145,7 +145,7 @@
 # Gate on master update complete
 ##############################################################################
 - name: Gate on master update
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - set_fact:
@@ -197,7 +197,7 @@
 # Gate on reconcile
 ##############################################################################
 - name: Gate on reconcile
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   tasks:
   - set_fact:

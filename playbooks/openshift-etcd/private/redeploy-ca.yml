@@ -24,7 +24,7 @@
 - import_playbook: ca.yml
 
 - name: Create temp directory for syncing certs
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
@@ -74,7 +74,7 @@
     when: groups.oo_etcd_to_config | default([]) | length > 0
 
 - name: Delete temporary directory on localhost
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

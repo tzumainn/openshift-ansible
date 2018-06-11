@@ -5,7 +5,7 @@
 #
 
 - name: Check vars
-  hosts: localhost
+  hosts: ansible_host
   gather_facts: false
 
   pre_tasks:

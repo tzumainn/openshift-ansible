@@ -2,7 +2,7 @@
 - import_playbook: ../init/evaluate_groups.yml
 
 - name: Ensure there are new_etcd
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:

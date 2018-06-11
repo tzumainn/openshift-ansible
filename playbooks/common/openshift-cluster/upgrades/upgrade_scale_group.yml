@@ -1,6 +1,6 @@
 ---
 - name: create new scale group
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: build upgrade scale groups
     import_role:
@@ -58,7 +58,7 @@
 
 # Alright, let's clean up!
 - name: clean up the old scale group
-  hosts: localhost
+  hosts: ansible_host
   tasks:
   - name: clean up scale group
     import_role:

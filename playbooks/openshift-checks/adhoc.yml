@@ -9,7 +9,7 @@
   # NOTE: though the openshift_checks variable could be potentially defined on
   # individual hosts while not defined for localhost, we do not support that
   # usage. Running this play only in localhost speeds up execution.
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: false
   roles:

@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ansible_host
   connection: local
   tasks:
   - name: place all scale groups into Ansible groups

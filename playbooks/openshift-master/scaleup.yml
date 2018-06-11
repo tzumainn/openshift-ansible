@@ -2,7 +2,7 @@
 - import_playbook: ../init/evaluate_groups.yml
 
 - name: Ensure there are new_masters and new_nodes
-  hosts: localhost
+  hosts: ansible_host
   connection: local
   gather_facts: no
   tasks:
