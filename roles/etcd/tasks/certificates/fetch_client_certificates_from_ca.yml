@@ -115,7 +115,8 @@
   when: etcd_client_certs_missing | bool
 
 - name: Delete temporary directory
-  local_action: file path="/tmp/{{ inventory_hostname }}" state=absent
+  delegate_to: ansible_host
+  action: file path="/tmp/{{ inventory_hostname }}" state=absent
   changed_when: False
   when: etcd_client_certs_missing | bool
 
