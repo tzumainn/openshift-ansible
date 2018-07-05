@@ -38,7 +38,7 @@ def base_openshift_inventory(cluster_hosts):
 
     app = [server.name for server in cluster_hosts
            if server.metadata['host-type'] == 'node' and
-           server.metadata['sub-host-type'] == 'app']
+           server.metadata['sub-host-type'] in ['app', 'bm_app']]
 
     cns = [server.name for server in cluster_hosts
            if server.metadata['host-type'] == 'cns']
@@ -128,7 +128,7 @@ def build_inventory():
     cluster_hosts = [
         server for server in cloud.list_servers()
         if 'metadata' in server and 'clusterid' in server.metadata and
-        (show_compute_nodes or server.metadata.get('sub-host-type') != 'app')]
+        (show_compute_nodes or server.metadata.get('sub-host-type') not in ['app', 'bm_app'])]
 
     inventory = base_openshift_inventory(cluster_hosts)
 

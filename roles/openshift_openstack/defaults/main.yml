@@ -7,10 +7,12 @@ openshift_openstack_lb_ingress_cidr: 0.0.0.0/0
 openshift_openstack_num_etcd: 0
 openshift_openstack_num_masters: 1
 openshift_openstack_num_nodes: 1
+openshift_openstack_num_bm_nodes: 0
 openshift_openstack_num_infra: 1
 openshift_openstack_num_cns: 0
 openshift_openstack_dns_nameservers: []
 openshift_openstack_nodes_to_remove: []
+openshift_openstack_bm_nodes_to_remove: []
 
 openshift_openstack_use_lbaas_load_balancer: false
 openshift_openstack_lbaasv2_provider: Octavia
@@ -57,6 +59,7 @@ openshift_openstack_master_hostname: master
 openshift_openstack_infra_hostname: infra-node
 openshift_openstack_cns_hostname: cns
 openshift_openstack_node_hostname: app-node
+openshift_openstack_bm_node_hostname: bm-app-node
 openshift_openstack_lb_hostname: lb
 openshift_openstack_etcd_hostname: etcd
 openshift_openstack_fqdn_nodes: true
@@ -66,12 +69,14 @@ openshift_openstack_lb_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_etcd_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_master_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_node_flavor: "{{ openshift_openstack_default_flavor }}"
+openshift_openstack_bm_node_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_infra_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_cns_flavor: "{{ openshift_openstack_default_flavor }}"
 openshift_openstack_master_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_infra_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_cns_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_node_image: "{{ openshift_openstack_default_image_name }}"
+openshift_openstack_bm_node_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_lb_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_etcd_image: "{{ openshift_openstack_default_image_name }}"
 openshift_openstack_provider_network_name: null
